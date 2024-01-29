@@ -42,7 +42,7 @@ class Server:
 
         res = index_range(page, page_size)
 
-        if page > (len(self.dataset()) - 1) / page_size:
+        if page > len(self.dataset()) / page_size:
             return []
         else:
             return self.dataset()[res[0]: res[1]]
