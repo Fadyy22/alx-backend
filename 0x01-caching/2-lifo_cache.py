@@ -2,24 +2,30 @@
 
 """module containing LIFOCache class"""
 
-
+from collections import OrderedDict
 from base_caching import BaseCaching
 
 
 class LIFOCache(BaseCaching):
     """LIFOCache class that uses LIFO caching system"""
 
+    def __init__(self):
+        """constructor function"""
+        super().__init__()
+        self.cache_data = OrderedDict()
+
     def put(self, key, item):
-        """puts a cache item in cache_data attribute using LIFO policy"""
+        """ Add an item in the cache
+        """
         if key is not None and item is not None:
-            if len(list(self.cache_data.keys())) > self.MAX_ITEMS:
-                last_key = list(self.cache_data.keys())[-1]
-                del self.cache_data[last_key]
-                print(f"DISCARD: {last_key}")
+            if key not in self.cache_data:
+                if len(list(self.cache_data.keys())) + 1 > self.MAX_ITEMS:
+                    last_key = self.cache_data.popitem(True)
+                    print(f"DISCARD: {last_key[0]}")
             self.cache_data[key] = item
+            self.cache_data.move_to_end(key, True)
 
     def get(self, key):
-        """gets a cache item from cache_data by key"""
-        if key is not None and key in list(self.cache_data.keys()):
-            return self.cache_data[key]
-        return None
+        """ Get an item by key
+        """
+        return self.cache_data.get(key, None)
