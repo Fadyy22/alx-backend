@@ -70,7 +70,7 @@ def get_timezone() -> str:
 
 @app.route("/")
 def home() -> str:
-    """render 7-index.html page""
+    """render 7-index.html page"""
     return render_template('7-index.html')
 
 
