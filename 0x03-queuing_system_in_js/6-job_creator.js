@@ -5,8 +5,8 @@ const jobData = {
   message: 'Hello there!'
 };
 
-const queue = createQueue({ name: 'push_notification_code' });
-const job = queue.create(jobData);
+const queue = createQueue();
+const job = queue.create('push_notification_code', jobData);
 
 job
   .on('enqueue', () => {
