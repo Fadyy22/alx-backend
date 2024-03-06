@@ -3,8 +3,9 @@ import { createQueue } from 'kue';
 
 const queue = createQueue();
 
-queue.process('push_notification_code', (job) => {
+queue.process('push_notification_code', (job, done) => {
   sendNotification(job.data.phoneNumber, job.data.message);
+  done();
 });
 
 const sendNotification = (phoneNumber, message) => {
